@@ -1,0 +1,14 @@
+[
+	"DocumentFormat.OpenXml",
+	"Microsoft.Data.SqlClient",
+	"Microsoft.EntityFrameworkCore",
+	"Microsoft.EntityFrameworkCore.Design",
+	"Microsoft.EntityFrameworkCore.Relational",
+	"Microsoft.EntityFrameworkCore.SqlServer",
+	"Microsoft.EntityFrameworkCore.Tools",
+	"Microsoft.Extensions.Configuration.Abstractions",
+	"Microsoft.Extensions.Configuration.Binder",
+	"Newtonsoft.Json",
+	"System.DirectoryServices",
+	"System.DirectoryServices.AccountManagement"
+]
