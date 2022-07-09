@@ -2,9 +2,11 @@
 
 This project provides the ability to generate a NuGet Package cache based on a series of dependencies defined in a provided JSON file. The generated cache can then be placed on a file share located on a network with no internet, and serve as a NuGet package feed.
 
-> All functionality is encapsulated in [Build-PackageCache.ps1](./Build-PackageCache.ps1)
-
 ## Script
+
+[Build-PackageCache.ps1](./Build-PackageCache.ps1)
+
+> Supporting functions are defined in [`functions.ps1`](./functions.ps1) and dot sourced into [Build-PackageCache.ps1](./Build-PackageCache.ps1)
 
 Property | Type | Default Value | Description
 ---------|------|---------------|------------
