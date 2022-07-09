@@ -1,12 +1,5 @@
-function Get-ProjectPath(
-    [string] $sln,
-    [string] $project
-) {
-    return Join-Path $sln $project
-}
-
 function Build-Project([psobject] $project, [string] $sln) {
-    $output = Get-ProjectPath $sln $project.name
+    $output = Join-Path $sln $project.name
 
     & dotnet new $project.template -o $output
     & dotnet sln $sln add $output
@@ -24,13 +17,10 @@ function Build-Solution([psobject] $data, [string] $sln) {
     }
 }
 
-function Initialize-Path([string] $path, [string] $type) {
-    if (-not (Test-Path $path)) {
-        New-Item -Path $path -ItemType $type -Force
-    }
-}
-
 function Build-Cache([string] $cache, [string] $sln) {
-    Initialize-Path $cache "Directory"
+    if (-not (Test-Path $cache)) {
+        New-Item -Path $cache -ItemType Directory -Force
+    }
+
     & dotnet restore $sln --packages $cache
 }
