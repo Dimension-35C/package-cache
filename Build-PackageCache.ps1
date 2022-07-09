@@ -13,9 +13,9 @@ param(
 	$SkipClean
 )
 
-$sln = "src/BuildCache"
 $data = Get-Content -Raw -Path $Source | ConvertFrom-Json
 
+$sln = "src/BuildCache"
 if (Test-Path $sln) {
 	Remove-Item $sln -Recurse -Force
 }
@@ -43,12 +43,12 @@ function Build-Project([psobject] $project, [string] $sln) {
 function Build-Solution([psobject] $data, [string] $sln) {
 	& dotnet new sln -o $sln
 
-	$data.projects | ForEach-Object {
-		Build-Project $_ $data.solution
+	$data | ForEach-Object {
+		Build-Project $_ $sln
 	}
 }
 
-Build-Solution $data
+Build-Solution $data $sln
 
 #endregion
 
@@ -60,7 +60,7 @@ function Initialize-Path([string] $path, [string] $type) {
 	}
 }
 
-function Build-Cache([string] $sln, [string] $cache) {
+function Build-Cache([string] $cache, [string] $sln) {
 	Initialize-Path $cache "Directory"
 	& dotnet restore $sln --packages $cache
 }
@@ -69,7 +69,7 @@ if (-not $SkipClean) {
 	& dotnet nuget locals all --clear
 }
 
-Build-Cache $data.solution $Cache
+Build-Cache $Cache $sln
 
 if (-not $KeepSolution) {
 	Remove-Item "src" -Recurse -Force

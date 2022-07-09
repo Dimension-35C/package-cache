@@ -15,58 +15,57 @@ Property | Type | Default Value | Description
 
 ## JSON Schema
 
-* `projects` - An array of objects that provide metadata for a .NET project
-	* `name` - The name of the Project
-	* `template` - The `dotnet new {template}` to use to generate the project
-	* `dependencies` - An array of NuGet package dependencies to use with `dotnet add package {dependency}`.
+An array of objects that provide metadata for a .NET project. Object schema is as follows:
+
+* `name` - The name of the Project
+* `template` - The `dotnet new {template}` to use to generate the project
+* `dependencies` - An array of NuGet package dependencies to use with `dotnet add package {dependency}`.
 
 ### Example
 
 ```json
-{
-	"projects": [
-		{
-			"name": "Core",
-			"template": "classlib",
-			"dependencies": [
-				"DocumentFormat.OpenXml",
-				"Microsoft.Data.SqlClient",
-				"Microsoft.EntityFrameworkCore",
-				"Microsoft.EntityFrameworkCore.Design",
-				"Microsoft.EntityFrameworkCore.Relational",
-				"Microsoft.EntityFrameworkCore.SqlServer",
-				"Microsoft.EntityFrameworkCore.Tools",
-				"Microsoft.Extensions.Configuration.Abstractions",
-				"Microsoft.Extensions.Configuration.Binder",
-				"Newtonsoft.Json",
-				"System.DirectoryServices",
-				"System.DirectoryServices.AccountManagement"
-			]
-		},
-		{
-			"name": "Test",
-			"template": "xunit",
-			"dependencies": [
-				"AutoFixture.AutoMoq",
-				"AutoFixture.xUnit2",
-				"Coverlet.Collector",
-				"Microsoft.NET.Test.Sdk",
-				"xUnit",
-				"xUnit.Runner.VisualStudio"
-			]
-		},
-		{
-			"name": "Web",
-			"template": "webapi",
-			"dependencies": [
-				"Automapper",
-				"Microsoft.AspNetCore.Mvc.NewtonsoftJson",
-				"Microsoft.AspNetCore.OData",
-				"Swashbuckle.AspNetCore",
-				"Swashbuckle.AspNetCore.Newtonsoft",
-				"System.Linq.Dynamic.Core"
-			]
-		}
-	]
-}
+[
+    {
+        "name": "Core",
+        "template": "classlib",
+        "dependencies": [
+            "DocumentFormat.OpenXml",
+            "Microsoft.Data.SqlClient",
+            "Microsoft.EntityFrameworkCore",
+            "Microsoft.EntityFrameworkCore.Design",
+            "Microsoft.EntityFrameworkCore.Relational",
+            "Microsoft.EntityFrameworkCore.SqlServer",
+            "Microsoft.EntityFrameworkCore.Tools",
+            "Microsoft.Extensions.Configuration.Abstractions",
+            "Microsoft.Extensions.Configuration.Binder",
+            "Newtonsoft.Json",
+            "System.DirectoryServices",
+            "System.DirectoryServices.AccountManagement"
+        ]
+    },
+    {
+        "name": "Test",
+        "template": "xunit",
+        "dependencies": [
+            "AutoFixture.AutoMoq",
+            "AutoFixture.xUnit2",
+            "Coverlet.Collector",
+            "Microsoft.NET.Test.Sdk",
+            "xUnit",
+            "xUnit.Runner.VisualStudio"
+        ]
+    },
+    {
+        "name": "Web",
+        "template": "webapi",
+        "dependencies": [
+            "Automapper",
+            "Microsoft.AspNetCore.Mvc.NewtonsoftJson",
+            "Microsoft.AspNetCore.OData",
+            "Swashbuckle.AspNetCore",
+            "Swashbuckle.AspNetCore.Newtonsoft",
+            "System.Linq.Dynamic.Core"
+        ]
+    }
+]
 ```
