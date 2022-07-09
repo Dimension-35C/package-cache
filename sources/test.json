@@ -1,8 +1,0 @@
-[
-	"AutoFixture.AutoMoq",
-	"AutoFixture.xUnit2",
-	"Coverlet.Collector",
-	"Microsoft.NET.Test.Sdk",
-	"xUnit",
-	"xUnit.Runner.VisualStudio"
-]

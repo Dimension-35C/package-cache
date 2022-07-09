@@ -1,14 +1,58 @@
 param(
 	[string]
 	[Parameter()]
-	$cache = "nuget-packages",
+	$Cache = "nuget-packages",
 	[string]
 	[Parameter()]
-	$sources = "sources",
-	[string]
+	$Source = "solution.json",
+	[switch]
 	[Parameter()]
-	$testTemplate = "xunit"
+	$KeepSolution,
+	[switch]
+	[Parameter()]
+	$SkipClean
 )
+
+$sln = "src/BuildCache"
+$data = Get-Content -Raw -Path $Source | ConvertFrom-Json
+
+if (Test-Path $sln) {
+	Remove-Item $sln -Recurse -Force
+}
+
+#region Build-Solution
+
+function Get-ProjectPath(
+	[string] $sln,
+	[string] $project
+) {
+	return Join-Path $sln $project
+}
+
+function Build-Project([psobject] $project, [string] $sln) {
+	$output = Get-ProjectPath $sln $project.name
+
+	& dotnet new $project.template -o $output
+	& dotnet sln $sln add $output
+
+	$project.dependencies | ForEach-Object {
+		& dotnet add $output package $_
+	}
+}
+
+function Build-Solution([psobject] $data, [string] $sln) {
+	& dotnet new sln -o $sln
+
+	$data.projects | ForEach-Object {
+		Build-Project $_ $data.solution
+	}
+}
+
+Build-Solution $data
+
+#endregion
+
+#region Build-Cache
 
 function Initialize-Path([string] $path, [string] $type) {
 	if (-not (Test-Path $path)) {
@@ -16,51 +60,19 @@ function Initialize-Path([string] $path, [string] $type) {
 	}
 }
 
-function Initialize-Solution(
-	[string] $sln
-) {
-	& dotnet new sln -o $sln
+function Build-Cache([string] $sln, [string] $cache) {
+	Initialize-Path $cache "Directory"
+	& dotnet restore $sln --packages $cache
 }
 
-function Get-ProjectPath(
-	[string] $sln,
-	[string] $project
-) {
-	return Join-Path $sln "$sln.$project"
+if (-not $SkipClean) {
+	& dotnet nuget locals all --clear
 }
 
-function Build-Cache(
-	[string] $template,
-	[string] $sln,
-	[string] $project,
-	[string] $source
-) {
-	$output = Get-ProjectPath $sln $project
-	& dotnet new $template -o $output
-	& dotnet sln $sln add $output
+Build-Cache $data.solution $Cache
 
-	$data = Get-Content -Raw -Path $source | ConvertFrom-Json
-
-	$data | ForEach-Object {
-		& dotnet add $output package $_
-	}
+if (-not $KeepSolution) {
+	Remove-Item "src" -Recurse -Force
 }
 
-Initialize-Path $cache "Directory"
-
-$coreFile = Join-Path $sources "core.json"
-$testFile = Join-Path $sources "test.json"
-$webFile = Join-Path $sources "web.json"
-
-& dotnet nuget locals all --clear
-
-$sln = "BuildCache"
-Initialize-Solution $sln
-
-Build-Cache "classlib" $sln "Core" $coreFile
-Build-Cache $testTemplate $sln "Test" $testFile
-Build-Cache "webapi" $sln "Web" $webFile
-
-& dotnet restore $sln --packages $cache
-
-Remove-Item $sln -Recurse -Force
+#endregion

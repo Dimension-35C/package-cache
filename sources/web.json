@@ -1,8 +1,0 @@
-[
-	"Automapper",
-	"Microsoft.AspNetCore.Mvc.NewtonsoftJson",
-	"Microsoft.AspNetCore.OData",
-	"Swashbuckle.AspNetCore",
-	"Swashbuckle.AspNetCore.Newtonsoft",
-	"System.Linq.Dynamic.Core"
-]
