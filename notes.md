@@ -20,6 +20,18 @@ Computer | **Windows**: `%ProgramFiles(x86)%\NuGet\Config` <br />**Mac/Linux**: 
 # show nuget sources
 dotnet nuget list source
 
+# add nuget source
+dotnet nuget add source https://api.nuget.org/v3/index.json -n nuget.org
+
+# remove nuget source
+dotnet nuget remove source "Offline Cache"
+
+# disable nuget source
+dotnet nuget disable source "Microsoft Visual Studio Offline Packages"
+
+# enable nuget source
+dotnet nuget enable source "Microsoft Visual Studio Offline Packages"
+
 # list all cache directories
 dotnet nuget locals all --list
 ```
