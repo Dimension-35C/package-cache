@@ -1,5 +1,7 @@
 # Package Cache
 
+> This capability has been integrated into my [offline-platform](https://github.com/JaimeStill/offline-platform) repository and is now maintained there. This repository is archived for historical reference.
+
 This project provides the ability to generate a NuGet Package cache based on a series of dependencies defined in a provided JSON file. The generated cache can then be placed on a file share located on a network with no internet, and serve as a NuGet package feed.
 
 ## Script
